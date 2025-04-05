@@ -16,7 +16,7 @@ export function NavigationBar() {
   const currentPath = location.pathname;
 
   return (
-    <div className="flex items-center justify-between p-2">
+    <div className="flex items-center justify-between p-2 mb-6">
       <h1 className="text-xl font-bold text-indigo-500 font-titillium leading-tight">
         Process First LLC
       </h1>

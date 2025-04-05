@@ -1,6 +1,9 @@
 import { useCallback, useState } from "react";
 import { applyEdgeChanges, applyNodeChanges, ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import { DataTable } from "@/DataTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GitCompareArrows, LayersIcon } from "lucide-react";
 
 const initialNodes = [
   {
@@ -43,7 +46,32 @@ export const CanvasPage = () => {
 
   return (
     <>
-      <div className="h-screen w-screen p-8">
+      <Tabs defaultValue="node" className="w-full">
+        <TabsList className="grid w-[400px] grid-cols-2">
+          <TabsTrigger
+            value="node"
+            className="data-[state=active]:bg-indigo-200 data-[state=active]:text-black-foreground"
+          >
+            <LayersIcon className="h-4 w-4 mr-2" />
+            Nodes
+          </TabsTrigger>
+          <TabsTrigger
+            value="edge"
+            className="data-[state=active]:bg-indigo-200 data-[state=active]:text-black-foreground"
+          >
+            <GitCompareArrows className="h-4 w-4 mr-2" />
+            Edges
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="node">
+          <DataTable columns={[]} data={[]} />
+        </TabsContent>
+        <TabsContent value="edge">
+          <DataTable columns={[]} data={[]} />
+        </TabsContent>
+      </Tabs>
+
+      <div className="h-screen w-screen p-12">
         <ReactFlow
           nodes={nodes}
           edges={edges}
