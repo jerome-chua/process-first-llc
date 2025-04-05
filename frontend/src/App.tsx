@@ -1,11 +1,12 @@
 import './App.css'
-import { PaginatedTable } from './PaginatedTable'
+import { DataTable } from './DataTable'
+import { NavigationBar } from './NavigationBar'
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Process First LLC</h1>
-      <PaginatedTable />
+      <NavigationBar />
+      <DataTable columns={[]} data={[]} />
     </>
   )
 }
