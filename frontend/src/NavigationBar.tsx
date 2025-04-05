@@ -9,6 +9,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import { Link } from "react-router";
 
 export function NavigationBar() {
   return (
@@ -19,13 +20,29 @@ export function NavigationBar() {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md">
-              CANVAS
+            <NavigationMenuLink
+              asChild
+              className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md"
+            >
+              <Link
+                to="/canvas"
+                className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md"
+              >
+                CANVAS
+              </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md">
-              CHARTS
+            <NavigationMenuLink
+              asChild
+              className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md"
+            >
+              <Link
+                to="/dashboard"
+                className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md"
+              >
+                CHARTS
+              </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
