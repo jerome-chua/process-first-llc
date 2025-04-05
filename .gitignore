@@ -1,0 +1,39 @@
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+# Artifacts
+results/
+output*/
+model_cache/
+output*
+user_data.sh
+
+set_env_variables.sh
+logs/
+.DS_Store
+gradio_cached_examples
+trust_policy.json
+
+.TODOS
+ca.cert
+*.pkl
+**/state
+**/setup_credentials.sh
+*.csv
+**/credentials.env
+.venv/
+certificates/
+*.parquet
+target/
+anthropic.env
