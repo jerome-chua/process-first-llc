@@ -33,6 +33,7 @@ ca.cert
 *.csv
 **/credentials.env
 .venv/
+.env
 certificates/
 *.parquet
 target/
