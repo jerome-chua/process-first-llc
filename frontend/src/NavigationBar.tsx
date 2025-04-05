@@ -9,39 +9,46 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export function NavigationBar() {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return (
     <div className="flex items-center justify-between p-2">
-      <h1 className="text-xl font-bold text-indigo-600 font-titillium leading-tight">
+      <h1 className="text-xl font-bold text-indigo-500 font-titillium leading-tight">
         Process First LLC
       </h1>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md"
-            >
+            <NavigationMenuLink asChild>
               <Link
                 to="/canvas"
-                className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md"
+                className={cn(
+                  "px-4 py-2 font-black cursor-pointer transition-colors duration-200 rounded-md",
+                  currentPath === "/canvas"
+                    ? "text-indigo-600 bg-indigo-50 underline decoration-2"
+                    : "hover:text-indigo-600 hover:bg-indigo-100"
+                )}
               >
                 CANVAS
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md"
-            >
+            <NavigationMenuLink asChild>
               <Link
                 to="/dashboard"
-                className="px-4 py-2 font-black cursor-pointer transition-colors duration-200 hover:text-indigo-600 hover:bg-indigo-50 rounded-md"
+                className={cn(
+                  "px-4 py-2 font-black cursor-pointer transition-colors duration-200 rounded-md",
+                  currentPath === "/dashboard"
+                    ? "text-indigo-600 bg-indigo-100 underline decoration-2"
+                    : "hover:text-indigo-600 hover:bg-indigo-100"
+                )}
               >
-                CHARTS
+                DASHBOARD
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
