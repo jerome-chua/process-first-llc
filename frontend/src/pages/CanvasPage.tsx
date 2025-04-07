@@ -10,11 +10,14 @@ import "@xyflow/react/dist/style.css";
 import { DataTable } from "@/DataTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GitCompareArrows, LayersIcon, PlusIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, mapTableNodesToFlowNodes } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { Button } from "@/components/ui/button";
-import { initialNodes, mockSeedNodes } from "@/__mocks__/mockNodes";
-import { initialEdges } from "@/__mocks__/mockEdges";
+import { initialTableNodes } from "@/__mocks__/mockNodes";
+import { initialTableEdges } from "@/__mocks__/mockEdges";
+import { TableNode } from "@/types/TableNode";
+import { useState } from "react";
+import { TableEdge } from "@/types/TableEdge";
 
 const getTabTriggerClasses = (additionalCn = "") =>
   cn(
@@ -23,18 +26,30 @@ const getTabTriggerClasses = (additionalCn = "") =>
   );
 
 export const CanvasPage = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [tableNodes, setTableNodes] = useState<TableNode[]>(initialTableNodes);
+  const [tableEdges, setTableEdges] = useState<TableEdge[]>(initialTableEdges);
+
+  const [nodes, setNodes, onNodesChange] = useNodesState(
+    mapTableNodesToFlowNodes(tableNodes)
+  );
+  const [edges, setEdges, onEdgesChange] = useEdgesState(tableEdges);
 
   const onAddNode = () => {
-    const newNode = {
+    const id = nanoid();
+    const newTableNode = {
+      id,
+      label: "New Node",
+      type: "type1" as const,
+    };
+    setTableNodes((prev) => [newTableNode, ...prev]);
+
+    const newFlowNode = {
       id: nanoid(),
       type: "mindmap",
       data: { label: "New Node" },
-      position: { x: 0, y: 50 },
+      position: { x: Math.random() * 200, y: Math.random() * 200 },
     };
-
-    setNodes((nds) => nds.concat(newNode));
+    setNodes((nds) => nds.concat(newFlowNode));
   };
 
   return (
@@ -81,10 +96,10 @@ export const CanvasPage = () => {
         </div>
 
         <TabsContent value="node">
-          <DataTable columns={[]} data={mockSeedNodes.data} />
+          <DataTable columns={[]} data={tableNodes} />
         </TabsContent>
         <TabsContent value="edge">
-          <DataTable columns={[]} data={[]} />
+          <DataTable columns={[]} data={tableEdges} />
         </TabsContent>
       </Tabs>
     </>

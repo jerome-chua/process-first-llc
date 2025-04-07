@@ -1,4 +1,11 @@
-export const initialEdges = [
-  { id: "e1-2", source: "1", target: "2" },
-  { id: "e2-3", source: "2", target: "3", animated: true },
+import { TableEdge } from "@/types/TableEdge";
+import { nanoid } from "nanoid";
+import { initialTableNodes } from "./mockNodes";
+
+export const initialTableEdges: TableEdge[] = [
+  {
+    id: nanoid(),
+    source: initialTableNodes[0].id,
+    target: initialTableNodes[1].id,
+  },
 ];

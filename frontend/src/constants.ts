@@ -1,9 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 export type Node = {
-    name: string
-    type: "type1" | "type2" | "type3"
-  }
+  name: string;
+  type: "type1" | "type2" | "type3";
+};
 
 export const columns: ColumnDef<Node>[] = [
   {
@@ -14,4 +14,8 @@ export const columns: ColumnDef<Node>[] = [
     accessorKey: "nodeType",
     header: "Type",
   },
-]
+];
+
+export const NODE_TYPES = ["type1", "type2", "type3"];
+
+export const PAGINATION_SIZES = [5, 10, 20, 30];

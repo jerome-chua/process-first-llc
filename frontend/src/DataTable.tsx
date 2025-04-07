@@ -48,6 +48,7 @@ import {
   SelectValue,
 } from "./components/ui/select";
 import { TableNode } from "./types/TableNode";
+import { NODE_TYPES, PAGINATION_SIZES } from "./constants";
 
 export const columns: ColumnDef<TableNode>[] = [
   {
@@ -98,8 +99,6 @@ export const columns: ColumnDef<TableNode>[] = [
     accessorKey: "type",
     header: () => <div className="text-left">Type</div>,
     cell: ({ row, table }) => {
-      const nodeTypes = ["type1", "type2", "type3"];
-
       // Needs to update state
       const handleTypeChange = (value: string) => {
         table.options.meta?.updateData(row.index, "type", value);
@@ -115,7 +114,7 @@ export const columns: ColumnDef<TableNode>[] = [
               <SelectValue placeholder={row.getValue("type")} />
             </SelectTrigger>
             <SelectContent>
-              {nodeTypes.map((type) => (
+              {NODE_TYPES.map((type) => (
                 <SelectItem key={type} value={type}>
                   {type}
                 </SelectItem>
@@ -238,7 +237,7 @@ export function DataTable({ data }) {
             }}
             className="border rounded px-2 py-1 text-sm"
           >
-            {[5, 10, 20, 30].map((pageSize) => (
+            {PAGINATION_SIZES.map((pageSize) => (
               <option key={pageSize} value={pageSize}>
                 {pageSize}
               </option>
