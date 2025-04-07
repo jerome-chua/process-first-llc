@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -31,7 +32,13 @@ import {
 import { PAGINATION_SIZES } from "./constants";
 import { useState } from "react";
 
-export const DataTable = ({ data, columns, onRowAction }) => {
+interface Props<T> {
+  data: T[];
+  columns: ColumnDef<T>[];
+  onRowAction: (actionType: string, rowData: T) => void;
+}
+
+export const DataTable = <T,>({ data, columns, onRowAction }: Props<T>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -40,7 +47,6 @@ export const DataTable = ({ data, columns, onRowAction }) => {
   const table = useReactTable({
     data,
     columns,
-    onRowAction,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     autoResetPageIndex: false,
@@ -57,9 +63,9 @@ export const DataTable = ({ data, columns, onRowAction }) => {
       rowSelection,
     },
     meta: {
-      onRowAction: (actionType: string, rowData: any) => {
+      onRowAction: (actionType: string, updatedRowData: T) => {
         if (onRowAction) {
-          onRowAction(actionType, rowData);
+          onRowAction(actionType, updatedRowData);
         }
       },
     },

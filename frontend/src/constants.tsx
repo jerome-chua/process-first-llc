@@ -5,13 +5,14 @@ import { ArrowUpDown, Pencil, TrashIcon } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { TableNode } from "./types/TableNode";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./components/ui/select";
-import { Input } from "./components/ui/input";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/ui/dialog";
+import { NodeEditDialog } from "./NodeEditDialog";
 
 export const NODE_TYPES = ["type1", "type2", "type3"];
 export const PAGINATION_SIZES = [5, 10, 20, 30];
@@ -59,65 +60,46 @@ export const nodeColumns: ColumnDef<TableNode>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="text-left">
-        <Input type="text" placeholder={row.getValue("label")} />
-      </div>
-    ),
+    cell: ({ row }) => <div className="text-left">{row.getValue("label")}</div>,
   },
   {
     accessorKey: "type",
     header: () => <div className="text-left">Type</div>,
-    cell: ({ row, table }) => {
-      const handleTypeChange = (value: string) => {
-        const updatedNode = {
-          ...row.original,
-          type: value,
-        };
-        table.options.meta?.onRowAction("edit", updatedNode);
-      };
-
-      return (
-        <>
-          <Select
-            onValueChange={handleTypeChange}
-            defaultValue={row.getValue("type")}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={row.getValue("type")} />
-            </SelectTrigger>
-            <SelectContent>
-              {NODE_TYPES.map((type) => (
-                <SelectItem key={type} value={type}>
-                  {type}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </>
-      );
-    },
+    cell: ({ row }) => <div className="text-left">{row.getValue("type")}</div>,
   },
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row, table }) => {
       return (
-        <div className="flex items-center">
-          <Button
-            onClick={() =>
-              table.options.meta?.onRowAction("edit", row.original)
-            }
-            className="cursor-pointer mr-2"
-            variant="outline"
-          >
-            <Pencil className="w-4 h-4 text-gray-600" />
-          </Button>
+        <div className="flex justify-end">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="cursor-pointer mr-2" variant="outline">
+                <Pencil className="w-4 h-4 text-gray-600" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Edit Node</DialogTitle>
+                <DialogDescription>
+                  Make changes to respective node here. Click save when you're
+                  done.
+                </DialogDescription>
+              </DialogHeader>
+              <NodeEditDialog
+                node={row.original}
+                onSave={(updatedNode: TableNode) => {
+                  table.options.meta?.onRowAction("update", updatedNode);
+                }}
+              />
+            </DialogContent>
+          </Dialog>
           <Button
             onClick={() =>
               table.options.meta?.onRowAction("delete", row.original)
             }
-            className="cursor-pointer"
+            className="cursor-pointer mr-4"
             variant="outline"
           >
             <TrashIcon className="w-4 h-4 text-red-300" />

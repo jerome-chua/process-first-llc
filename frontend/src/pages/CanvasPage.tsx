@@ -30,7 +30,6 @@ const getTabTriggerClasses = (additionalCn = "") =>
 export const CanvasPage = () => {
   const [tableNodes, setTableNodes] = useState<TableNode[]>(initialTableNodes);
   const [tableEdges, setTableEdges] = useState<TableEdge[]>(initialTableEdges);
-  const [editing, setEditing] = useState<TableNode | null>(null);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
     mapTableNodesToFlowNodes(tableNodes)
@@ -55,21 +54,38 @@ export const CanvasPage = () => {
     setNodes((nds: Node[]) => [newFlowNode, ...nds]);
   };
 
-  const handleNodeAction = (actionType: string, rowData: TableNode) => {
+  const handleNodeAction = (
+    actionType: string,
+    updatedNodeData: TableNode
+  ): void => {
     switch (actionType) {
-      case "edit":
-        setEditing(rowData);
-        break;
       case "delete":
         setTableNodes(
-          tableNodes.filter((node: TableNode) => node.id !== rowData.id)
+          tableNodes.filter((node: TableNode) => node.id !== updatedNodeData.id)
         );
-        setNodes(nodes.filter((node: Node) => node.id !== rowData.id));
+        setNodes(nodes.filter((node: Node) => node.id !== updatedNodeData.id));
         break;
       case "update":
         setTableNodes(
-          tableNodes.map((node) => (node.id === rowData.id ? rowData : node))
+          tableNodes.map((node: TableNode) =>
+            node.id === updatedNodeData.id ? updatedNodeData : node
+          )
         );
+        setNodes(
+          nodes.map((node: Node) =>
+            node.id === updatedNodeData.id
+              ? {
+                  ...node,
+                  data: {
+                    ...node.data,
+                    label: updatedNodeData.label,
+                    type: updatedNodeData.type,
+                  },
+                }
+              : node
+          )
+        );
+        break;
     }
   };
 
