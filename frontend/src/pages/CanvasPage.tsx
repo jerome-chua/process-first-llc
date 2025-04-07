@@ -16,8 +16,9 @@ import { Button } from "@/components/ui/button";
 import { initialTableNodes } from "@/__mocks__/mockNodes";
 import { initialTableEdges } from "@/__mocks__/mockEdges";
 import { TableNode } from "@/types/TableNode";
-import { useState } from "react";
 import { TableEdge } from "@/types/TableEdge";
+import { useState } from "react";
+import { nodeColumns } from "@/constants";
 
 const getTabTriggerClasses = (additionalCn = "") =>
   cn(
@@ -96,7 +97,7 @@ export const CanvasPage = () => {
         </div>
 
         <TabsContent value="node">
-          <DataTable columns={[]} data={tableNodes} />
+          <DataTable columns={nodeColumns} data={tableNodes} />
         </TabsContent>
         <TabsContent value="edge">
           <DataTable columns={[]} data={tableEdges} />
