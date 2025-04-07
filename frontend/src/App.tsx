@@ -1,3 +1,4 @@
+// import { AnimatePresence, motion } from "framer-motion";
 import { Route, Routes } from "react-router";
 import "./App.css";
 import { NavigationBar } from "./NavigationBar";

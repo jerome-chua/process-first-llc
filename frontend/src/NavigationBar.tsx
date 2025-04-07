@@ -27,7 +27,7 @@ export function NavigationBar() {
               <Link
                 to="/canvas"
                 className={cn(
-                  "px-4 py-2 font-black cursor-pointer transition-colors duration-200 rounded-md",
+                  "px-4 py-2 font-black cursor-pointer rounded-md",
                   currentPath === "/canvas"
                     ? "text-indigo-600 bg-indigo-50 underline decoration-2"
                     : "hover:text-indigo-600 hover:bg-indigo-100"

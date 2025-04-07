@@ -1,9 +1,17 @@
 import { useCallback, useState } from "react";
-import { applyEdgeChanges, applyNodeChanges, ReactFlow } from "@xyflow/react";
+import {
+  applyEdgeChanges,
+  applyNodeChanges,
+  Background,
+  BackgroundVariant,
+  Controls,
+  ReactFlow,
+} from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { DataTable } from "@/DataTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GitCompareArrows, LayersIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const initialNodes = [
   {
@@ -31,6 +39,12 @@ const initialEdges = [
   { id: "e2-3", source: "2", target: "3", animated: true },
 ];
 
+const getTabTriggerClasses = (additionalCn = "") =>
+  cn(
+    "data-[state=active]:bg-indigo-200 data-[state=active]:text-black-foreground cursor-pointer",
+    additionalCn
+  );
+
 export const CanvasPage = () => {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
@@ -48,17 +62,11 @@ export const CanvasPage = () => {
     <>
       <Tabs defaultValue="node" className="w-full">
         <TabsList className="grid w-[400px] grid-cols-2">
-          <TabsTrigger
-            value="node"
-            className="data-[state=active]:bg-indigo-200 data-[state=active]:text-black-foreground"
-          >
+          <TabsTrigger value="node" className={getTabTriggerClasses()}>
             <LayersIcon className="h-4 w-4 mr-2" />
             Nodes
           </TabsTrigger>
-          <TabsTrigger
-            value="edge"
-            className="data-[state=active]:bg-indigo-200 data-[state=active]:text-black-foreground"
-          >
+          <TabsTrigger value="edge" className={getTabTriggerClasses()}>
             <GitCompareArrows className="h-4 w-4 mr-2" />
             Edges
           </TabsTrigger>
@@ -71,14 +79,23 @@ export const CanvasPage = () => {
         </TabsContent>
       </Tabs>
 
-      <div className="h-screen w-screen p-12">
+      <div className="h-screen p-2 mt-2">
         <ReactFlow
+          className="border-1 rounded-lg"
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           fitView
-        />
+        >
+          <Controls position="center-right" />
+          <Background
+            id="1"
+            gap={10}
+            color="#f1f1f1"
+            variant={BackgroundVariant.Dots}
+          />
+        </ReactFlow>
       </div>
     </>
   );
