@@ -47,50 +47,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/ui/select";
-
-const data: TableNode[] = [
-  {
-    nodeId: "m5gr84i9",
-    nodeName: "chemicalNode1",
-    type: "type1",
-  },
-  {
-    nodeId: "m5gr84i8",
-    nodeName: "chemicalNode3",
-    type: "type3",
-  },
-  {
-    nodeId: "m5gr84i9",
-    nodeName: "chemicalNode2",
-    type: "type2",
-  },
-  {
-    nodeId: "z5gr84i9",
-    nodeName: "testing",
-    type: "type1",
-  },
-  {
-    nodeId: "m5gr84i9as",
-    nodeName: "testing2",
-    type: "type2",
-  },
-  {
-    nodeId: "m5gr84i9dd",
-    nodeName: "chemicalNode133",
-    type: "type3",
-  },
-  {
-    nodeId: "m5gr84i9asdf",
-    nodeName: "pharmaNOde",
-    type: "type1",
-  },
-];
-
-export type TableNode = {
-  nodeId: string;
-  nodeName: string;
-  type: "type1" | "type2" | "type3";
-};
+import { TableNode } from "./types/TableNode";
 
 export const columns: ColumnDef<TableNode>[] = [
   {
@@ -116,14 +73,14 @@ export const columns: ColumnDef<TableNode>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "nodeId",
+    accessorKey: "id",
     header: "ID",
     cell: ({ row }) => (
-      <div className="text-left capitalize">{row.getValue("nodeId")}</div>
+      <div className="text-left capitalize">{row.getValue("id")}</div>
     ),
   },
   {
-    accessorKey: "nodeName",
+    accessorKey: "label",
     header: ({ column }) => {
       return (
         <Button
@@ -135,9 +92,7 @@ export const columns: ColumnDef<TableNode>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="text-left">{row.getValue("nodeName")}</div>
-    ),
+    cell: ({ row }) => <div className="text-left">{row.getValue("label")}</div>,
   },
   {
     accessorKey: "type",
@@ -197,7 +152,7 @@ export const columns: ColumnDef<TableNode>[] = [
   },
 ];
 
-export function DataTable() {
+export function DataTable({ data }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -223,7 +178,7 @@ export function DataTable() {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-1">
       <div className="rounded-md border">
         <Table>
           <TableHeader>
