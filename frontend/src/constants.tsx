@@ -1,13 +1,7 @@
 import { Checkbox } from "@radix-ui/react-checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuItem,
-} from "@radix-ui/react-dropdown-menu";
+
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Pencil, TrashIcon } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { TableNode } from "./types/TableNode";
 import {
@@ -17,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/ui/select";
+import { Input } from "./components/ui/input";
 
 export const NODE_TYPES = ["type1", "type2", "type3"];
 export const PAGINATION_SIZES = [5, 10, 20, 30];
@@ -69,7 +64,11 @@ export const nodeColumns: ColumnDef<TableNode>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="text-left">{row.getValue("label")}</div>,
+    cell: ({ row }) => (
+      <div className="text-left">
+        <Input type="text" placeholder={row.getValue("label")} />
+      </div>
+    ),
   },
   {
     accessorKey: "type",
@@ -107,21 +106,14 @@ export const nodeColumns: ColumnDef<TableNode>[] = [
     cell: ({ row }) => {
       console.log("ROW: ", row);
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => console.log("test")}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center">
+          <Button className="cursor-pointer mr-2" variant="outline">
+            <Pencil className="w-4 h-4 text-gray-600" />
+          </Button>
+          <Button className="cursor-pointer" variant="outline">
+            <TrashIcon className="w-4 h-4 text-red-300" />
+          </Button>
+        </div>
       );
     },
   },
