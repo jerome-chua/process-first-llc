@@ -19,7 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -30,8 +29,9 @@ import {
   PaginationNext,
 } from "./components/ui/pagination";
 import { PAGINATION_SIZES } from "./constants";
+import { useState } from "react";
 
-export function DataTable({ data, columns }) {
+export const DataTable = ({ data, columns, onRowAction }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -40,8 +40,10 @@ export function DataTable({ data, columns }) {
   const table = useReactTable({
     data,
     columns,
+    onRowAction,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    autoResetPageIndex: false,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -53,6 +55,13 @@ export function DataTable({ data, columns }) {
       columnFilters,
       columnVisibility,
       rowSelection,
+    },
+    meta: {
+      onRowAction: (actionType: string, rowData: any) => {
+        if (onRowAction) {
+          onRowAction(actionType, rowData);
+        }
+      },
     },
   });
 
@@ -97,8 +106,11 @@ export function DataTable({ data, columns }) {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-left">
-                  No results.
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center italic"
+                >
+                  No results available.
                 </TableCell>
               </TableRow>
             )}
@@ -195,4 +207,4 @@ export function DataTable({ data, columns }) {
       </div>
     </div>
   );
-}
+};

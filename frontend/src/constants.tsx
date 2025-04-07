@@ -16,11 +16,6 @@ import { Input } from "./components/ui/input";
 export const NODE_TYPES = ["type1", "type2", "type3"];
 export const PAGINATION_SIZES = [5, 10, 20, 30];
 
-export type Node = {
-  name: string;
-  type: "type1" | "type2" | "type3";
-};
-
 export const nodeColumns: ColumnDef<TableNode>[] = [
   {
     id: "select",
@@ -74,9 +69,12 @@ export const nodeColumns: ColumnDef<TableNode>[] = [
     accessorKey: "type",
     header: () => <div className="text-left">Type</div>,
     cell: ({ row, table }) => {
-      // Needs to update state
       const handleTypeChange = (value: string) => {
-        table.options.meta?.updateData(row.index, "type", value);
+        const updatedNode = {
+          ...row.original,
+          type: value,
+        };
+        table.options.meta?.onRowAction("edit", updatedNode);
       };
 
       return (
@@ -103,14 +101,25 @@ export const nodeColumns: ColumnDef<TableNode>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      console.log("ROW: ", row);
+    cell: ({ row, table }) => {
       return (
         <div className="flex items-center">
-          <Button className="cursor-pointer mr-2" variant="outline">
+          <Button
+            onClick={() =>
+              table.options.meta?.onRowAction("edit", row.original)
+            }
+            className="cursor-pointer mr-2"
+            variant="outline"
+          >
             <Pencil className="w-4 h-4 text-gray-600" />
           </Button>
-          <Button className="cursor-pointer" variant="outline">
+          <Button
+            onClick={() =>
+              table.options.meta?.onRowAction("delete", row.original)
+            }
+            className="cursor-pointer"
+            variant="outline"
+          >
             <TrashIcon className="w-4 h-4 text-red-300" />
           </Button>
         </div>

@@ -3,6 +3,7 @@ import {
   BackgroundVariant,
   Controls,
   ReactFlow,
+  Node,
   useEdgesState,
   useNodesState,
 } from "@xyflow/react";
@@ -29,6 +30,7 @@ const getTabTriggerClasses = (additionalCn = "") =>
 export const CanvasPage = () => {
   const [tableNodes, setTableNodes] = useState<TableNode[]>(initialTableNodes);
   const [tableEdges, setTableEdges] = useState<TableEdge[]>(initialTableEdges);
+  const [editing, setEditing] = useState<TableNode | null>(null);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
     mapTableNodesToFlowNodes(tableNodes)
@@ -45,12 +47,30 @@ export const CanvasPage = () => {
     setTableNodes((prev) => [newTableNode, ...prev]);
 
     const newFlowNode = {
-      id: nanoid(),
-      type: "mindmap",
+      id,
+      type: "input", // to change
       data: { label: "New Node" },
       position: { x: Math.random() * 200, y: Math.random() * 200 },
     };
-    setNodes((nds) => nds.concat(newFlowNode));
+    setNodes((nds: Node[]) => [newFlowNode, ...nds]);
+  };
+
+  const handleNodeAction = (actionType: string, rowData: TableNode) => {
+    switch (actionType) {
+      case "edit":
+        setEditing(rowData);
+        break;
+      case "delete":
+        setTableNodes(
+          tableNodes.filter((node: TableNode) => node.id !== rowData.id)
+        );
+        setNodes(nodes.filter((node: Node) => node.id !== rowData.id));
+        break;
+      case "update":
+        setTableNodes(
+          tableNodes.map((node) => (node.id === rowData.id ? rowData : node))
+        );
+    }
   };
 
   return (
@@ -97,7 +117,11 @@ export const CanvasPage = () => {
         </div>
 
         <TabsContent value="node">
-          <DataTable columns={nodeColumns} data={tableNodes} />
+          <DataTable
+            columns={nodeColumns}
+            data={tableNodes}
+            onRowAction={handleNodeAction}
+          />
         </TabsContent>
         <TabsContent value="edge">
           <DataTable columns={[]} data={tableEdges} />
