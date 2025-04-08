@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GitCompareArrows, LayersIcon, PlusIcon } from "lucide-react";
 import {
   cn,
+  getTabTriggerClasses,
   mapTableEdgesToFlowEdges,
   mapTableNodesToFlowNodes,
 } from "@/lib/utils";
@@ -35,12 +36,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { AddEdgeDialog } from "@/AddEdgeDialog";
-
-const getTabTriggerClasses = (additionalCn = "") =>
-  cn(
-    "data-[state=active]:bg-indigo-200 data-[state=active]:text-black-foreground cursor-pointer",
-    additionalCn
-  );
 
 export const CanvasPage = () => {
   const [tableNodes, setTableNodes] = useState<TableNode[]>(initialTableNodes);
@@ -109,21 +104,58 @@ export const CanvasPage = () => {
     }
   };
 
-  const onAddEdge = () => {
-    const id = nanoid();
-    const newTableEdge: TableEdge = {
-      id,
-      upstream: "",
-      downstream: "",
-    };
+  const handleEdgeAction = (
+    actionType: string,
+    updatedEdgeData: TableEdge
+  ): void => {
+    switch (actionType) {
+      case "delete":
+        setTableEdges(
+          tableEdges.filter((edge: TableEdge) => edge.id !== updatedEdgeData.id)
+        );
+        setEdges(edges.filter((edge: Edge) => edge.id !== updatedEdgeData.id));
+        break;
+      case "update":
+        setTableEdges(
+          tableEdges.map((edge: TableEdge) =>
+            edge.id === updatedEdgeData.id ? updatedEdgeData : edge
+          )
+        );
+        setEdges(
+          edges.map((edge: Edge) =>
+            edge.id === updatedEdgeData.id
+              ? {
+                  ...edge,
+                  upstream: updatedEdgeData.upstream,
+                  downstream: updatedEdgeData.downstream,
+                }
+              : edge
+          )
+        );
+        break;
+    }
+  };
+
+  const onSaveNewEdge = (newTableEdge: TableEdge) => {
     setTableEdges((prev) => [newTableEdge, ...prev]);
 
-    const newFlowEdge: Edge = {
-      id,
-      source: "",
-      target: "",
-    };
-    setEdges((edges: Edge[]) => [newFlowEdge, ...edges]);
+    const upstreamNode = nodes.find(
+      (node) => node.id === newTableEdge.upstream
+    );
+    const downstreamNode = nodes.find(
+      (node) => node.id === newTableEdge.downstream
+    );
+
+    if (upstreamNode && downstreamNode) {
+      const newFlowEdge: Edge = {
+        id: newTableEdge.id,
+        source: upstreamNode.id,
+        target: downstreamNode.id,
+      };
+      setEdges((edges: Edge[]) => [newFlowEdge, ...edges]);
+    } else {
+      console.error("Could not find node IDs for the selected nodes");
+    }
   };
 
   const onTabChange = (value: string) => {
@@ -179,7 +211,6 @@ export const CanvasPage = () => {
                   <Button
                     variant="outline"
                     className="px-4 cursor-pointer border-indigo-600 text-indigo-600 hover:bg-indigo-700 hover:text-white transition-colors duration-2 00 ease-in-out"
-                    // onClick={onAddEdge}
                   >
                     <PlusIcon className="h-4 w-4 mr-2" />
                     Add edge
@@ -189,11 +220,11 @@ export const CanvasPage = () => {
                   <DialogHeader>
                     <DialogTitle>Add Edge</DialogTitle>
                     <DialogDescription>
-                      Select 2 nodes to create an edge. Click save when you're
-                      done.
+                      Select 2 nodes for an edge to be created. Click save when
+                      you're done.
                     </DialogDescription>
                   </DialogHeader>
-                  <AddEdgeDialog nodes={nodes} onSave={onAddEdge} />
+                  <AddEdgeDialog nodes={nodes} onSave={onSaveNewEdge} />
                 </DialogContent>
               </Dialog>
             </>
@@ -209,7 +240,11 @@ export const CanvasPage = () => {
         </TabsContent>
 
         <TabsContent value={Tab.EDGE}>
-          <DataTable columns={edgeColumns} data={tableEdges} />
+          <DataTable
+            columns={edgeColumns}
+            data={tableEdges}
+            onRowAction={handleEdgeAction}
+          />
         </TabsContent>
       </Tabs>
     </>

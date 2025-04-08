@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Label } from "./components/ui/label";
-import { Input } from "./components/ui/input";
 import {
   Select,
   SelectContent,
@@ -16,7 +15,7 @@ import { Node } from "@xyflow/react";
 
 interface Props {
   nodes: Node[];
-  onSave: (edge: TableEdge) => void;
+  onSave: (newEdge: TableEdge) => void;
 }
 
 export function AddEdgeDialog({ nodes, onSave }: Props) {
@@ -66,8 +65,8 @@ export function AddEdgeDialog({ nodes, onSave }: Props) {
           </Label>
           <Select
             value={formData.downstream}
-            onValueChange={(value) =>
-              setFormData({ ...formData, downstream: value })
+            onValueChange={(selectedDownStreamNode) =>
+              setFormData({ ...formData, downstream: selectedDownStreamNode })
             }
           >
             <SelectTrigger className="w-[180px]">

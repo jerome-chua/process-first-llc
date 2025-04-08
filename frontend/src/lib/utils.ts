@@ -8,13 +8,20 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const getTabTriggerClasses = (additionalCn = "") =>
+  cn(
+    "data-[state=active]:bg-indigo-200 data-[state=active]:text-black-foreground cursor-pointer",
+    additionalCn
+  );
+
 export const mapTableNodesToFlowNodes = (nodes: TableNode[]): Node[] => {
   return nodes.map((node: TableNode) => {
     return {
       id: node.id,
-      type: "input",
+      type: "default",
       data: {
         label: node.label,
+        type: node.type,
       },
       position: { x: Math.random() * 300, y: Math.random() * 300 },
     } as Node;
@@ -22,11 +29,18 @@ export const mapTableNodesToFlowNodes = (nodes: TableNode[]): Node[] => {
 };
 
 export const mapTableEdgesToFlowEdges = (edges: TableEdge[]): Edge[] => {
-  return edges.map((node: TableEdge) => {
+  return edges.map((edge: TableEdge) => {
     return {
-      id: node.id,
-      source: node.upstream,
-      target: node.downstream,
+      id: edge.id,
+      source: edge.upstream,
+      target: edge.downstream,
+      type: "default",
     } as Edge;
   });
 };
+
+export const mapTableEdgeToFlowEdge = (edge: TableEdge): Edge => ({
+  id: edge.id,
+  source: edge.upstream,
+  target: edge.downstream,
+});
