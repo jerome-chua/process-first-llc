@@ -12,7 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
-import { NodeEditDialog } from "./NodeEditDialog";
+import { EditNodeDialog } from "./EditNodeDialog";
+import { TableEdge } from "./types/TableEdge";
 
 export const NODE_TYPES = ["type1", "type2", "type3"];
 export const PAGINATION_SIZES = [5, 10, 20, 30];
@@ -87,7 +88,7 @@ export const nodeColumns: ColumnDef<TableNode>[] = [
                   done.
                 </DialogDescription>
               </DialogHeader>
-              <NodeEditDialog
+              <EditNodeDialog
                 node={row.original}
                 onSave={(updatedNode: TableNode) => {
                   table.options.meta?.onRowAction("update", updatedNode);
@@ -107,5 +108,29 @@ export const nodeColumns: ColumnDef<TableNode>[] = [
         </div>
       );
     },
+  },
+];
+
+export const edgeColumns: ColumnDef<TableEdge>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+    cell: ({ row }) => (
+      <div className="text-left capitalize">{row.getValue("id")}</div>
+    ),
+  },
+  {
+    accessorKey: "upstream",
+    header: () => <div className="text-left">Upstream</div>,
+    cell: ({ row }) => (
+      <div className="text-left">{row.getValue("upstream")}</div>
+    ),
+  },
+  {
+    accessorKey: "downstream",
+    header: () => <div className="text-left">Downstream</div>,
+    cell: ({ row }) => (
+      <div className="text-left">{row.getValue("downstream")}</div>
+    ),
   },
 ];

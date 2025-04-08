@@ -6,12 +6,17 @@ import {
   Node,
   useEdgesState,
   useNodesState,
+  Edge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { DataTable } from "@/DataTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GitCompareArrows, LayersIcon, PlusIcon } from "lucide-react";
-import { cn, mapTableNodesToFlowNodes } from "@/lib/utils";
+import {
+  cn,
+  mapTableEdgesToFlowEdges,
+  mapTableNodesToFlowNodes,
+} from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { Button } from "@/components/ui/button";
 import { initialTableNodes } from "@/__mocks__/mockNodes";
@@ -19,7 +24,17 @@ import { initialTableEdges } from "@/__mocks__/mockEdges";
 import { TableNode } from "@/types/TableNode";
 import { TableEdge } from "@/types/TableEdge";
 import { useState } from "react";
-import { nodeColumns } from "@/constants";
+import { edgeColumns, nodeColumns } from "@/constants";
+import { Tab } from "@/types/Tab";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { AddEdgeDialog } from "@/AddEdgeDialog";
 
 const getTabTriggerClasses = (additionalCn = "") =>
   cn(
@@ -31,24 +46,29 @@ export const CanvasPage = () => {
   const [tableNodes, setTableNodes] = useState<TableNode[]>(initialTableNodes);
   const [tableEdges, setTableEdges] = useState<TableEdge[]>(initialTableEdges);
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>(
     mapTableNodesToFlowNodes(tableNodes)
   );
-  const [edges, setEdges, onEdgesChange] = useEdgesState(tableEdges);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(
+    mapTableEdgesToFlowEdges(tableEdges)
+  );
+
+  const [tab, setTab] = useState<Tab>(Tab.NODE);
 
   const onAddNode = () => {
     const id = nanoid();
+    const label = "New Node";
     const newTableNode = {
       id,
-      label: "New Node",
+      label,
       type: "type1" as const,
     };
     setTableNodes((prev) => [newTableNode, ...prev]);
 
-    const newFlowNode = {
+    const newFlowNode: Node = {
       id,
-      type: "input", // to change
-      data: { label: "New Node" },
+      type: "input", // to change & have to be careful with our own "type"
+      data: { label, type: "type1" },
       position: { x: Math.random() * 200, y: Math.random() * 200 },
     };
     setNodes((nds: Node[]) => [newFlowNode, ...nds]);
@@ -89,6 +109,27 @@ export const CanvasPage = () => {
     }
   };
 
+  const onAddEdge = () => {
+    const id = nanoid();
+    const newTableEdge: TableEdge = {
+      id,
+      upstream: "",
+      downstream: "",
+    };
+    setTableEdges((prev) => [newTableEdge, ...prev]);
+
+    const newFlowEdge: Edge = {
+      id,
+      source: "",
+      target: "",
+    };
+    setEdges((edges: Edge[]) => [newFlowEdge, ...edges]);
+  };
+
+  const onTabChange = (value: string) => {
+    setTab(value as Tab);
+  };
+
   return (
     <>
       <div className="h-[70vh] mb-8">
@@ -110,37 +151,65 @@ export const CanvasPage = () => {
         </ReactFlow>
       </div>
 
-      <Tabs defaultValue="node" className="w-full">
+      <Tabs value={tab} onValueChange={onTabChange} className="w-full">
         <div className="flex justify-between items-center">
           <TabsList className="grid w-[400px] grid-cols-2">
-            <TabsTrigger value="node" className={getTabTriggerClasses()}>
+            <TabsTrigger value={Tab.NODE} className={getTabTriggerClasses()}>
               <LayersIcon className="h-4 w-4 mr-2" />
               Nodes
             </TabsTrigger>
-            <TabsTrigger value="edge" className={getTabTriggerClasses()}>
+            <TabsTrigger value={Tab.EDGE} className={getTabTriggerClasses()}>
               <GitCompareArrows className="h-4 w-4 mr-2" />
               Edges
             </TabsTrigger>
           </TabsList>
-          <Button
-            variant="outline"
-            className="px-4 cursor-pointer border-indigo-600 text-indigo-600 hover:bg-indigo-700 hover:text-white transition-colors duration-2 00 ease-in-out"
-            onClick={onAddNode}
-          >
-            <PlusIcon className="h-4 w-4 mr-2" />
-            Add node
-          </Button>
+          {tab === Tab.NODE ? (
+            <Button
+              variant="outline"
+              className="px-4 cursor-pointer border-indigo-600 text-indigo-600 hover:bg-indigo-700 hover:text-white transition-colors duration-2 00 ease-in-out"
+              onClick={onAddNode}
+            >
+              <PlusIcon className="h-4 w-4 mr-2" />
+              Add node
+            </Button>
+          ) : (
+            <>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="px-4 cursor-pointer border-indigo-600 text-indigo-600 hover:bg-indigo-700 hover:text-white transition-colors duration-2 00 ease-in-out"
+                    // onClick={onAddEdge}
+                  >
+                    <PlusIcon className="h-4 w-4 mr-2" />
+                    Add edge
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Add Edge</DialogTitle>
+                    <DialogDescription>
+                      Select 2 nodes to create an edge. Click save when you're
+                      done.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <AddEdgeDialog nodes={nodes} onSave={onAddEdge} />
+                </DialogContent>
+              </Dialog>
+            </>
+          )}
         </div>
 
-        <TabsContent value="node">
+        <TabsContent value={Tab.NODE}>
           <DataTable
             columns={nodeColumns}
             data={tableNodes}
             onRowAction={handleNodeAction}
           />
         </TabsContent>
-        <TabsContent value="edge">
-          <DataTable columns={[]} data={tableEdges} />
+
+        <TabsContent value={Tab.EDGE}>
+          <DataTable columns={edgeColumns} data={tableEdges} />
         </TabsContent>
       </Tabs>
     </>

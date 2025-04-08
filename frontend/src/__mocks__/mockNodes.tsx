@@ -4,22 +4,22 @@ import { nanoid } from "nanoid";
 export const initialTableNodes: TableNode[] = [
   {
     id: nanoid(),
-    label: "chemicalNode1",
+    label: "chemNode1",
     type: "type1",
   },
   {
     id: nanoid(),
-    label: "chemicalNode3",
-    type: "type3",
-  },
-  {
-    id: nanoid(),
-    label: "chemicalNode2",
+    label: "chemNode2",
     type: "type2",
   },
   {
     id: nanoid(),
-    label: "testing",
+    label: "chemNode3",
+    type: "type3",
+  },
+  {
+    id: nanoid(),
+    label: "chemNode4",
     type: "type1",
   },
 ];

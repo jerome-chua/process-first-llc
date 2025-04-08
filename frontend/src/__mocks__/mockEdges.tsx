@@ -5,7 +5,7 @@ import { initialTableNodes } from "./mockNodes";
 export const initialTableEdges: TableEdge[] = [
   {
     id: nanoid(),
-    source: initialTableNodes[0].id,
-    target: initialTableNodes[1].id,
+    upstream: initialTableNodes[0].id,
+    downstream: initialTableNodes[1].id,
   },
 ];

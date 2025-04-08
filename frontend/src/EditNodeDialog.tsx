@@ -18,7 +18,7 @@ interface Props {
   onSave: (node: TableNode) => void;
 }
 
-export function NodeEditDialog({ node, onSave }: Props) {
+export function EditNodeDialog({ node, onSave }: Props) {
   const [formData, setFormData] = useState<TableNode>({
     id: node.id,
     label: node.label,
