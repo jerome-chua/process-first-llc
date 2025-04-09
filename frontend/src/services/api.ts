@@ -28,10 +28,6 @@ export interface Scenario {
   kpi_value: number;
 }
 
-export interface TopImpact {
-  [key: string]: number;
-}
-
 export const mockApi = {
   getProcessData: async () => {
     try {
@@ -43,7 +39,7 @@ export const mockApi = {
     }
   },
 
-  getTopImpacts: async (): Promise<TopImpact> => {
+  getTopImpacts: async (): Promise<any> => {
     try {
       const response = await apiClient.get("/top-impacts");
       return response.data;

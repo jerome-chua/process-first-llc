@@ -12,7 +12,10 @@ def get_data() -> ProcessResponse:
 
 def get_top_impact_variables():
     data = get_data()
-    return data.data.top_impact
+    return {
+        "top_summary_text": data.data.top_summary_text,
+        "top_impact": data.data.top_impact
+    }
 
 def get_scenarios():
     data = get_data()
