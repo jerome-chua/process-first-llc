@@ -13,7 +13,6 @@ import { DataTable } from "@/DataTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GitCompareArrows, LayersIcon, PlusIcon } from "lucide-react";
 import {
-  cn,
   getTabTriggerClasses,
   mapTableEdgesToFlowEdges,
   mapTableNodesToFlowNodes,
@@ -124,6 +123,7 @@ export const CanvasPage = () => {
     actionType: string,
     updatedEdgeData: TableEdge
   ): void => {
+    console.log("see: ", updatedEdgeData);
     switch (actionType) {
       case "delete":
         setTableEdges(
@@ -131,6 +131,7 @@ export const CanvasPage = () => {
         );
         setEdges(edges.filter((edge: Edge) => edge.id !== updatedEdgeData.id));
         break;
+      // TODO: Jerome - need to ensure nodes are affected when edit happens/delete happens
       case "update":
         setTableEdges(
           tableEdges.map((edge: TableEdge) =>
@@ -140,11 +141,11 @@ export const CanvasPage = () => {
         setEdges(
           edges.map((edge: Edge) =>
             edge.id === updatedEdgeData.id
-              ? {
+              ? ({
                   ...edge,
-                  upstream: updatedEdgeData.upstream,
-                  downstream: updatedEdgeData.downstream,
-                }
+                  source: updatedEdgeData.upstream,
+                  target: updatedEdgeData.downstream,
+                } as Edge)
               : edge
           )
         );
@@ -154,8 +155,6 @@ export const CanvasPage = () => {
 
   const onSaveNewEdge = (newTableEdge: TableEdge) => {
     setTableEdges((prev) => [newTableEdge, ...prev]);
-
-    console.log("SEE newTableEdge, ", newTableEdge);
 
     const upstreamNode = nodes.find(
       (node) => node.id === newTableEdge.upstream

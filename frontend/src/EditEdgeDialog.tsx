@@ -10,77 +10,76 @@ import {
 import { DialogFooter, DialogTrigger } from "./components/ui/dialog";
 import { Button } from "./components/ui/button";
 import { TableEdge } from "./types/TableEdge";
-import { nanoid } from "nanoid";
-import { Node } from "@xyflow/react";
+import { TableNode } from "./types/TableNode";
 
 interface Props {
-  nodes: Node[];
-  onSave: (newEdge: TableEdge) => void;
+  edge: TableEdge;
+  nodes: TableNode[];
+  onSave: (edge: TableEdge) => void;
 }
 
-export function AddEdgeDialog({ nodes, onSave }: Props) {
+export function EditEdgeDialog({ edge, nodes, onSave }: Props) {
   const [formData, setFormData] = useState<TableEdge>({
-    id: nanoid(),
-    upstream: "",
-    downstream: "",
+    id: edge.id,
+    upstream: edge.upstream,
+    downstream: edge.downstream,
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("formData: ", formData);
     onSave(formData);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="grid gap-4 py-4">
-        <div className="grid grid-cols-4 items-center gap-2 cursor-pointer">
-          <Label htmlFor="upstream" className="text-right">
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="label" className="text-right">
             Upstream
           </Label>
           <Select
             value={formData.upstream}
-            onValueChange={(value) =>
-              setFormData({ ...formData, upstream: value })
+            onValueChange={(upstreamNodeId: string) =>
+              setFormData({ ...formData, upstream: upstreamNodeId })
             }
           >
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select node" />
+              <SelectValue placeholder={formData.upstream} />
             </SelectTrigger>
             <SelectContent>
-              {(nodes ?? []).map((node: Node) => (
+              {nodes.map((node) => (
                 <SelectItem
                   className="cursor-pointer col-span-3"
                   key={node.id}
-                  value={node.id || ""}
+                  value={node.id}
                 >
-                  {(node.data as any).label}
+                  {node.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
         <div className="grid grid-cols-4 items-center gap-2 cursor-pointer">
-          <Label htmlFor="downstream" className="text-right">
+          <Label htmlFor="type" className="text-right">
             Downstream
           </Label>
           <Select
             value={formData.downstream}
-            onValueChange={(selectedDownStreamNode) =>
-              setFormData({ ...formData, downstream: selectedDownStreamNode })
+            onValueChange={(downstreamNodeId: string) =>
+              setFormData({ ...formData, downstream: downstreamNodeId })
             }
           >
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select node" />
+              <SelectValue placeholder={formData.downstream} />
             </SelectTrigger>
             <SelectContent>
-              {(nodes ?? []).map((node: Node) => (
+              {nodes.map((node) => (
                 <SelectItem
                   className="cursor-pointer col-span-3"
                   key={node.id}
-                  value={node.id || ""}
+                  value={node.id}
                 >
-                  {(node.data as any).label}
+                  {node.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -89,11 +88,7 @@ export function AddEdgeDialog({ nodes, onSave }: Props) {
       </div>
       <DialogFooter>
         <DialogTrigger asChild>
-          <Button
-            type="submit"
-            className="cursor-pointer hover:cursor-pointer"
-            disabled={!(formData.downstream && formData.upstream)}
-          >
+          <Button type="submit" className="cursor-pointer hover:cursor-pointer">
             Save changes
           </Button>
         </DialogTrigger>
