@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -77,9 +77,8 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-
 @theme {
-  --font-titillium: 'Titillium Web', sans-serif;
+  --font-titillium: "Titillium Web", sans-serif;
 }
 
 @theme inline {
@@ -128,4 +127,3 @@
     @apply bg-background text-foreground;
   }
 }
-
