@@ -75,6 +75,22 @@ export const CanvasPage = () => {
   ): void => {
     switch (actionType) {
       case "delete":
+        setTableEdges(
+          tableEdges.filter(
+            (tableEdge: TableEdge) =>
+              tableEdge.upstream !== updatedNodeData.id &&
+              tableEdge.downstream !== updatedNodeData.id
+          )
+        );
+
+        setEdges(
+          edges.filter(
+            (edge: Edge) =>
+              edge.source !== updatedNodeData.id &&
+              edge.target !== updatedNodeData.id
+          )
+        );
+
         setTableNodes(
           tableNodes.filter((node: TableNode) => node.id !== updatedNodeData.id)
         );
