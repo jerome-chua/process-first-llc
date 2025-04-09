@@ -139,6 +139,8 @@ export const CanvasPage = () => {
   const onSaveNewEdge = (newTableEdge: TableEdge) => {
     setTableEdges((prev) => [newTableEdge, ...prev]);
 
+    console.log("SEE newTableEdge, ", newTableEdge);
+
     const upstreamNode = nodes.find(
       (node) => node.id === newTableEdge.upstream
     );

@@ -27,6 +27,7 @@ export function AddEdgeDialog({ nodes, onSave }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("formData: ", formData);
     onSave(formData);
   };
 
@@ -51,7 +52,7 @@ export function AddEdgeDialog({ nodes, onSave }: Props) {
                 <SelectItem
                   className="cursor-pointer col-span-3"
                   key={node.id}
-                  value={(node.data as any).label || ""}
+                  value={node.id || ""}
                 >
                   {(node.data as any).label}
                 </SelectItem>
@@ -77,7 +78,7 @@ export function AddEdgeDialog({ nodes, onSave }: Props) {
                 <SelectItem
                   className="cursor-pointer col-span-3"
                   key={node.id}
-                  value={(node.data as any).label || ""}
+                  value={node.id || ""}
                 >
                   {(node.data as any).label}
                 </SelectItem>
