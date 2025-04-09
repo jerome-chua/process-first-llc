@@ -111,7 +111,13 @@ export const nodeColumns: ColumnDef<TableNode>[] = [
   },
 ];
 
-export const edgeColumns: ColumnDef<TableEdge>[] = [
+interface EdgeColumnsProps {
+  tableNodes: TableNode[];
+}
+
+export const edgeColumns = ({
+  tableNodes,
+}: EdgeColumnsProps): ColumnDef<TableEdge>[] => [
   {
     accessorKey: "id",
     header: "ID",
@@ -122,15 +128,23 @@ export const edgeColumns: ColumnDef<TableEdge>[] = [
   {
     accessorKey: "upstream",
     header: () => <div className="text-left">Upstream</div>,
-    cell: ({ row }) => (
-      <div className="text-left">{row.getValue("upstream")}</div>
-    ),
+    cell: ({ row }) => {
+      const upstreamNodeId = row.getValue("upstream");
+      const upstreamNode = tableNodes.find(
+        (node: TableNode) => node.id === upstreamNodeId
+      );
+      return <div className="text-left">{upstreamNode?.label}</div>;
+    },
   },
   {
     accessorKey: "downstream",
     header: () => <div className="text-left">Downstream</div>,
-    cell: ({ row }) => (
-      <div className="text-left">{row.getValue("downstream")}</div>
-    ),
+    cell: ({ row }) => {
+      const downstreamNodeId = row.getValue("downstream");
+      const downstreamNode = tableNodes.find(
+        (node: TableNode) => node.id === downstreamNodeId
+      );
+      return <div className="text-left">{downstreamNode?.label}</div>;
+    },
   },
 ];

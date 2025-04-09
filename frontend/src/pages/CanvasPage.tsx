@@ -243,7 +243,7 @@ export const CanvasPage = () => {
 
         <TabsContent value={Tab.EDGE}>
           <DataTable
-            columns={edgeColumns}
+            columns={edgeColumns({ tableNodes })}
             data={tableEdges}
             onRowAction={handleEdgeAction}
           />
