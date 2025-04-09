@@ -39,3 +39,25 @@ certificates/
 *.parquet
 target/
 anthropic.env
+
+# Cache & temp files
+.cache/
+.temp/
+.coverage
+htmlcov/
+.coverage.*
+coverage.xml
+*.cover
+
+# Virtual environment files
+backend/venv/
+**/venv/
+
+# Python cache files
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/pip-log.txt
+**/pip-delete-this-directory.txt
