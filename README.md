@@ -67,27 +67,35 @@ If you install any new packages, run `pip freeze > requirements.txt` to save the
 4. Access the appplication at: `http://localhost:5174/`
 5. Ensure the backend server is running before using the application
 
-### Test Cases for Task 1 & 2 - Table & Canvas
-- Node Creation
-[x] When user adds node(s), pagination table should take things into consideration
-[x] When user adds node, the ID should be unique
-- Node Deletion
-[x] Users should be able to delete nodes
-[x] Deleting a node on Table row should result in it being deleted on Canvas
-[x] Deleting a node that has edges connected should result in the edge being deleted as well 
-- Node Modification
-[x] Editing a node's name should be reflected on Canvas & Table
-[x] Edited node properties should be saved correctly
-[x] Users should be able to change node types
-- Edge Creation
-[x] Edge creation should not be possible if fewer than 2 nodes exist
-[x] Dropdown/upstream options should reflect all available nodes from the Node table
-[x] New edges should appear in the edge table with correct endpoint nodes
-- Edge Modification
-[x] Users should be able to modify edge endpoints (change upstream/downstream nodes)
-[x] Changes to edges should be reflected in the table
-- Edge Deletion
-[x] Users should be able to delete edges
-[x] Deleted edges should be removed from both the table & canvas visualization
+### Feature Checklist
+
+### Node Creation
+- [x] Pagination table updates when nodes are added
+- [x] Node IDs are unique
+- [x] Pagination handles new nodes accordingly by including new pages
+
+### Node Deletion
+- [x] Node deletion functionality
+- [x] Table row deletion reflects on Canvas
+- [x] Connected edges are deleted when parent node is removed
+
+### Node Modification
+- [x] Node name edits sync between Canvas & Table
+- [x] Node property changes are persisted
+- [x] Node type changes are supported
+
+### Edge Creation
+- [x] Edge creation disabled when < 2 nodes exist
+- [x] Upstream/downstream options show all available nodes
+- [x] New edges appear in edge table with correct endpoints
+- [x] Pagination handles new edges accordingly by including new pages
+
+### Edge Modification
+- [x] Edge endpoint modification (upstream/downstream)
+- [x] Edge changes reflect in table & canvas view
+
+### Edge Deletion
+- [x] Edge deletion functionality
+- [x] Deleted edges remove from both table & canvas
 
 ---
