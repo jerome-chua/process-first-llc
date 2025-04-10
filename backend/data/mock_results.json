@@ -1,7 +1,7 @@
 {
   "data": {
     "main_summary_text": "Based on the simulations performed, following variables have the highest impact:  temperature on Equipment HEX-100, temperature on Equipment Fuel, temperature on Equipment Air.",
-    "top_summary_text": "Focus on the following varibles to achieve top 5'%' of KPI.",
+    "top_summary_text": "Focus on the following variables to achieve top 5% of KPI.",
     "top_impact": {
       "HEX-100.cold_fluid_temperature": 24.244,
       "Fuel.temperature": 27.853,

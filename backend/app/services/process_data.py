@@ -12,9 +12,19 @@ def get_data() -> ProcessResponse:
 
 def get_top_impact_variables():
     data = get_data()
+    cleaned_impact = {}
+    key_mapping = {
+        "HEX-100.cold_fluid_temperature": "HEX-100 - Cold Fluid Temperature",
+        "Fuel.temperature": "Fuel Temperature",
+        "Air.temperature": "Air Temperature",
+        "Others": "Others"
+    }
+    for old_key, new_key in key_mapping.items():
+        if old_key in data.data.top_impact:
+            cleaned_impact[new_key] = data.data.top_impact[old_key]
     return {
         "top_summary_text": data.data.top_summary_text,
-        "top_impact": data.data.top_impact
+        "top_impact": cleaned_impact
     }
 
 def get_scenarios():

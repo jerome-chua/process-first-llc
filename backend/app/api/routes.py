@@ -27,6 +27,7 @@ PDF_PATH = os.path.join(OUTPUT_DIR, "process_analysis_report.pdf")
 CHARTS_DIR = os.path.join(OUTPUT_DIR, "charts")
 os.makedirs(CHARTS_DIR, exist_ok=True)
 
+# Task 4
 @router.get("/process-data")
 async def process_data():
     """Return the full process data."""
@@ -35,8 +36,8 @@ async def process_data():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving process data: {str(e)}")
 
-@router.get("/top-impacts")
-async def top_impacts():
+@router.get("/top-impact")
+async def top_impact():
     """Return top impact variables."""
     try:
         return get_top_impact_variables()
@@ -59,6 +60,7 @@ async def setpoint_impacts():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving setpoint impacts: {str(e)}")
 
+# Task 3
 @router.get("/generate-report")
 async def generate_report():
     """

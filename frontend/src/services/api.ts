@@ -39,9 +39,9 @@ export const mockApi = {
     }
   },
 
-  getTopImpacts: async (): Promise<any> => {
+  getTopImpact: async (): Promise<any> => {
     try {
-      const response = await apiClient.get("/top-impacts");
+      const response = await apiClient.get("/top-impact");
       return response.data;
     } catch (error) {
       console.error("Error fetching top impacts:", error);

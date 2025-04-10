@@ -10,7 +10,7 @@ export const useTopImpactData = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const result = await mockApi.getTopImpacts();
+        const result = await mockApi.getTopImpact();
         setData(result);
       } catch (err) {
         console.error(err);

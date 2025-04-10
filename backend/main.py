@@ -11,7 +11,7 @@ app.include_router(api_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"], 
+    allow_origins=["http://localhost:5173", "http://localhost:5174"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -28,7 +28,7 @@ async def root():
             "/api/download-report",
             # Task 4
             "/api/process-data",
-            "/api/top-impacts",
+            "/api/top-impact",
             "/api/scenarios",
             "/api/setpoint-impacts"
         ]

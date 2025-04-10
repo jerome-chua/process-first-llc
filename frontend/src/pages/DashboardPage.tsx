@@ -20,15 +20,15 @@ const chartConfig = {
   temperature: {
     label: "Temperature Impact",
   },
-  "Air.temperature": {
+  "Air Temperature": {
     label: "Air",
     color: "hsl(var(--chart-1))",
   },
-  "Fuel.temperature": {
+  "Fuel Temperature": {
     label: "Fuel",
     color: "hsl(var(--chart-2))",
   },
-  "HEX-100.cold_fluid_temperature": {
+  "HEX-100 - Cold Fluid Temperature": {
     label: "HEX-100",
     color: "hsl(var(--chart-3))",
   },
@@ -45,13 +45,11 @@ export const DashboardPage = () => {
   const mapTopImpactToChartFormat = (topImpactData: any) => {
     if (!topImpactData || !topImpactData.top_impact) return [];
 
-    console.log("see: topImpactData", topImpactData);
-
     const colorMap: { [key: string]: string } = {
-      "Air.temperature": "#4f46e5",
-      "Fuel.temperature": "#f59e0b",
-      "HEX-100.cold_fluid_temperature": "#10b981",
-      Others: "#6b7280",
+      "Air Temperature": "#4f46e5",
+      "Fuel Temperature": "#f59e0b",
+      "HEX-100 - Cold Fluid Temperature": "#10b981",
+      "Others": "#6b7280",
     };
 
     return Object.entries(topImpactData.top_impact).map(([key, value]) => {

@@ -43,7 +43,7 @@ The backend provides the following API endpoints:
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/api/process-data` | GET | Returns the full process data |
-| `/api/top-impacts` | GET | Returns top impact variables affecting the KPI |
+| `/api/top-impact` | GET | Returns top impact variables affecting the KPI |
 | `/api/scenarios` | GET | Returns all scenarios with their KPI values |
 | `/api/setpoint-impacts` | GET | Returns setpoint impact summary |
 | `/api/generate-report` | GET | Generates a PDF report from the data |
