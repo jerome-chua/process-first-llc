@@ -22,7 +22,7 @@
 - Node.js and npm (for frontend development)
 
 ### Environment Variables
-Create a `.env` file in the backend directory with the following variables:
+Create a `.env` file in the root directory with the following variables:
 ```
 OPENAI_API_KEY=your_openai_api_key
 ```
@@ -34,9 +34,8 @@ OPENAI_API_KEY=your_openai_api_key
 2. Create virtual env in `backend` folder with `python3 -m venv venv`
 3. Activate venv with `. venv/bin/activate`
 4. Install packages with `pip3 install -r requirements.txt`
-5. Create `.env` file with relevant API keys (can reference `.env.example`)
-6. Run `python3 main.py` to run the backend
-7. Enter the following in a browser: `http://localhost:8000/docs` to see APIs
+5. Run `python3 main.py` to run the backend
+6. Enter the following in a browser: `http://localhost:8000/docs` to see APIs
 
 ### API Routes
 The backend provides the following API endpoints:
@@ -62,8 +61,10 @@ If you install any new packages, run `pip freeze > requirements.txt` to save the
 
 ## Frontend
 ### Getting Started
-1. If on root, `cd frontend`, and run `npm install` to install node packages
-2. To start the application, run `npm run dev`
-3. Enter the following in a browser: `http://localhost:5174/`
+1. Navigate to the frontend directory: `cd frontend`
+2. Install dependencies: `npm install`
+3. To start the application, run `npm run dev`
+4. Access the appplication at: `http://localhost:5174/`
+5. Ensure the backend server is running before using the application
 
 ---
