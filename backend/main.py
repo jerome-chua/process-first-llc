@@ -7,6 +7,7 @@ app = FastAPI(
     description="API for chemical process flow visualization",
     version="1.0.0"
 )
+app.include_router(api_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,6 +23,10 @@ async def root():
         "message": "Process First LLC API",
         "documentation": "/docs",
         "endpoints": [
+            # Task 3
+            "/api/generate-report",
+            "/api/download-report",
+            # Task 4
             "/api/process-data",
             "/api/top-impacts",
             "/api/scenarios",
@@ -29,7 +34,6 @@ async def root():
         ]
     }
 
-app.include_router(api_router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
