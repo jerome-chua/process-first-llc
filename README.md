@@ -67,4 +67,27 @@ If you install any new packages, run `pip freeze > requirements.txt` to save the
 4. Access the appplication at: `http://localhost:5174/`
 5. Ensure the backend server is running before using the application
 
+### Test Cases for Task 1 & 2 - Table & Canvas
+- Node Creation
+[x] When user adds node(s), pagination table should take things into consideration
+[x] When user adds node, the ID should be unique
+- Node Deletion
+[x] Users should be able to delete nodes
+[x] Deleting a node on Table row should result in it being deleted on Canvas
+[x] Deleting a node that has edges connected should result in the edge being deleted as well 
+- Node Modification
+[x] Editing a node's name should be reflected on Canvas & Table
+[x] Edited node properties should be saved correctly
+[x] Users should be able to change node types
+- Edge Creation
+[x] Edge creation should not be possible if fewer than 2 nodes exist
+[x] Dropdown/upstream options should reflect all available nodes from the Node table
+[x] New edges should appear in the edge table with correct endpoint nodes
+- Edge Modification
+[x] Users should be able to modify edge endpoints (change upstream/downstream nodes)
+[x] Changes to edges should be reflected in the table
+- Edge Deletion
+[x] Users should be able to delete edges
+[x] Deleted edges should be removed from both the table & canvas visualization
+
 ---
