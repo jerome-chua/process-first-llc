@@ -1,17 +1,12 @@
 import { useState } from "react";
-import { Label } from "./components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./components/ui/select";
-import { DialogFooter, DialogTrigger } from "./components/ui/dialog";
-import { Button } from "./components/ui/button";
-import { TableEdge } from "./types/TableEdge";
 import { nanoid } from "nanoid";
 import { Node } from "@xyflow/react";
+import { TableEdge } from "@/types/TableEdge";
+import { Label } from "./ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Button } from "./ui/button";
+import { DialogFooter } from "./ui/dialog";
 
 interface Props {
   nodes: Node[];

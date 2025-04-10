@@ -1,9 +1,9 @@
 // import { AnimatePresence, motion } from "framer-motion";
 import { Route, Routes } from "react-router";
 import "./App.css";
-import { NavigationBar } from "./NavigationBar";
 import { CanvasPage } from "./pages/CanvasPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import { NavigationBar } from "./components/NavigationBar";
 
 function App() {
   return (

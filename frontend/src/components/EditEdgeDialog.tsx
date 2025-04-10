@@ -1,16 +1,11 @@
+import { TableEdge } from "@/types/TableEdge";
+import { TableNode } from "@/types/TableNode";
 import { useState } from "react";
-import { Label } from "./components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./components/ui/select";
-import { DialogFooter, DialogTrigger } from "./components/ui/dialog";
-import { Button } from "./components/ui/button";
-import { TableEdge } from "./types/TableEdge";
-import { TableNode } from "./types/TableNode";
+import { Label } from "./ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { DialogFooter, DialogTrigger } from "./ui/dialog";
+import { Button } from "./ui/button";
+
 
 interface Props {
   edge: TableEdge;

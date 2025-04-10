@@ -1,17 +1,11 @@
+import { NODE_TYPES } from "@/constants";
+import { TableNode, TableNodeType } from "@/types/TableNode";
 import { useState } from "react";
-import { Label } from "./components/ui/label";
-import { Input } from "./components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./components/ui/select";
-import { NODE_TYPES } from "./constants";
-import { DialogFooter, DialogTrigger } from "./components/ui/dialog";
-import { TableNode, TableNodeType } from "./types/TableNode";
-import { Button } from "./components/ui/button";
+import { Button } from "./ui/button";
+import { DialogFooter, DialogTrigger } from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface Props {
   node: TableNode;

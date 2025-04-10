@@ -12,9 +12,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
-import { EditNodeDialog } from "./EditNodeDialog";
 import { TableEdge } from "./types/TableEdge";
-import { EditEdgeDialog } from "./EditEdgeDialog";
+import { EditNodeDialog } from "./components/EditNodeDialog";
+import { EditEdgeDialog } from "./components/EditEdgeDialog";
 
 export const NODE_TYPES = ["type1", "type2", "type3"];
 export const PAGINATION_SIZES = [5, 10, 20, 30];

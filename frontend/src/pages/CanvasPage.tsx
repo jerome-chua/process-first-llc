@@ -9,7 +9,6 @@ import {
   Edge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { DataTable } from "@/DataTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GitCompareArrows, LayersIcon, PlusIcon } from "lucide-react";
 import {
@@ -34,7 +33,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AddEdgeDialog } from "@/AddEdgeDialog";
+import { AddEdgeDialog } from "@/components/AddEdgeDialog";
+import { DataTable } from "@/components/DataTable";
 
 export const CanvasPage = () => {
   const [tableNodes, setTableNodes] = useState<TableNode[]>(initialTableNodes);
@@ -61,7 +61,7 @@ export const CanvasPage = () => {
 
     const newFlowNode: Node = {
       id,
-      type: "input", // to change & have to be careful with our own "type"
+      type: "default",
       data: { label, type: "type1" },
       position: { x: Math.random() * 200, y: Math.random() * 200 },
     };

@@ -20,17 +20,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationLink,
-  PaginationEllipsis,
-  PaginationNext,
-} from "./components/ui/pagination";
-import { PAGINATION_SIZES } from "./constants";
 import { useState } from "react";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "./ui/pagination";
+import { PAGINATION_SIZES } from "@/constants";
 
 interface Props<T> {
   data: T[];
