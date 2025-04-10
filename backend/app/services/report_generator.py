@@ -9,7 +9,7 @@ import os
 class ProcessAnalysisReport(BaseModel):
     executive_summary: str = Field(description="A concise executive summary of the overall process analysis")
     technical_summary: str = Field(description="A detailed technical summary of the findings")
-    variable_analysis: str = Field(description="Analysis of the impact of each key variable")
+    variable_analysis: str = Field(description="Analysis of the impact of each key variable (this is in %, not K)")
     recommendations: List[str] = Field(description="List of specific recommendations for process optimization")
     conclusion: str = Field(description="Concluding remarks tying the analysis together")
 
@@ -104,8 +104,9 @@ class ReportGenerator:
             response_text = response.content if hasattr(response, 'content') else str(response)
             parsed_response = self.parser.parse(response_text)
             self.report_content = parsed_response.model_dump()
+            print(f"✅ Success generating LLM response")
         except Exception as e:
-            print(f"Error parsing LLM response: {e}")
+            print(f"❌ Error parsing LLM response: {e}")
             self.report_content = {"raw_response": response}
             self.report_content = {
                 "executive_summary": "Analysis of process simulation data identified key variables affecting system performance.",
@@ -122,7 +123,7 @@ class ReportGenerator:
         return self.report_content
     
     def get_report_content(self) -> Dict:
-        """Get the report content, generating it if not already done"""
+        """Get the report content"""
         if not self.report_content:
             return self.generate_report_content()
         return self.report_content
