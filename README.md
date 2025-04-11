@@ -131,3 +131,19 @@ If you install any new packages, run `pip freeze > requirements.txt` to save the
 - [x] Deleted edges remove from both table & canvas
 
 ---
+
+## Assumptions
+- A node can be connected back to itself
+- Strict validations are not needed other than what was mentioned in requirements
+- Node colors should be reflected to give indication `type` has changed
+- Frontend aspect of task is more important than business-logic analysis, and hence, focus is on frontend and overall UI/UX
+- No tests need to be written
+- KPI values are important
+
+---
+
+## What I would have done better (if more time)
+- Modularise certain API services so there is greater reusability
+- Explore more data visualization frontend libraries as the one I was using was limited 
+- React 19 is new & therefore, alot of libraries' compatibility has not yet been updated, would have used React 18 earlier on if I had known this
+- Write some basic unit tests
