@@ -18,7 +18,7 @@ import {
 } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { Button } from "@/components/ui/button";
-import { initialTableNodes } from "@/__mocks__/mockNodes";
+import { initialTableNodes, nodeStyles } from "@/__mocks__/mockNodes";
 import { initialTableEdges } from "@/__mocks__/mockEdges";
 import { TableNode } from "@/types/TableNode";
 import { TableEdge } from "@/types/TableEdge";
@@ -52,18 +52,20 @@ export const CanvasPage = () => {
   const onAddNode = () => {
     const id = nanoid();
     const label = "New Node";
+    const type = "type1" as const;
     const newTableNode = {
       id,
       label,
-      type: "type1" as const,
+      type,
     };
     setTableNodes((prev) => [newTableNode, ...prev]);
 
     const newFlowNode: Node = {
       id,
       type: "default",
-      data: { label, type: "type1" },
+      data: { label, type },
       position: { x: Math.random() * 200, y: Math.random() * 200 },
+      style: nodeStyles[type]
     };
     setNodes((nds: Node[]) => [newFlowNode, ...nds]);
   };
@@ -111,6 +113,7 @@ export const CanvasPage = () => {
                     label: updatedNodeData.label,
                     type: updatedNodeData.type,
                   },
+                  style: nodeStyles[updatedNodeData.type]
                 }
               : node
           )
@@ -130,7 +133,6 @@ export const CanvasPage = () => {
         );
         setEdges(edges.filter((edge: Edge) => edge.id !== updatedEdgeData.id));
         break;
-      // TODO: Jerome - need to ensure nodes are affected when edit happens/delete happens
       case "update":
         setTableEdges(
           tableEdges.map((edge: TableEdge) =>

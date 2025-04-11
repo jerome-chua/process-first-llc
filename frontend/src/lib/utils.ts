@@ -24,6 +24,7 @@ export const mapTableNodesToFlowNodes = (nodes: TableNode[]): Node[] => {
         type: node.type,
       },
       position: { x: Math.random() * 300, y: Math.random() * 300 },
+      style: node.style
     } as Node;
   });
 };

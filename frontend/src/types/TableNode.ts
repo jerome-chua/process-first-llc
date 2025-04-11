@@ -4,4 +4,9 @@ export type TableNode = {
   id: string;
   label: string;
   type: TableNodeType;
+  style?: {
+    background: string;
+    color: string;
+    border: string;
+  };
 };
