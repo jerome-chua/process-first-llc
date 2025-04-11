@@ -39,27 +39,6 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-/*
-
-Scenario Analysis:
-Looking at the best performing scenario (Scenario 0 with KPI: 500.895K):
-Air temperature: 305.88K
-Fuel temperature: 364.524K
-HEX-100 cold fluid temperature: 329.974K
-Global heat transfer coefficient: 13.308 W/m²·K
-This combination suggests:
-Moderate air temperature (not too high to cause excessive NOx formation)
-Relatively high fuel temperature for good combustion
-Moderate cold fluid temperature
-Good heat transfer coefficient
-The worst performing scenario (Scenario 47 with KPI: 328.601K) has:
-Air temperature: 382.589K (very high)
-Fuel temperature: 302.123K (relatively low)
-HEX-100 cold fluid temperature: 344.451K (high)
-Global heat transfer coefficient: 14.34 W/m²·K (good)
-This suggests that even with a good heat transfer coefficient, the imbalance in combustion parameters (very high air temperature with low fuel temperature) leads to poor performance.
-
-*/
 
 export function ScenariosBarChart() {
   return (

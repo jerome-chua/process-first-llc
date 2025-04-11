@@ -42,7 +42,7 @@ async def top_impact():
     try:
         return get_top_impact_variables()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving top impacts: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error retrieving top impact: {str(e)}")
 
 @router.get("/scenarios")
 async def scenarios():

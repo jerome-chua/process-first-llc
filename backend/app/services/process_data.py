@@ -10,6 +10,12 @@ def get_data() -> ProcessResponse:
         data = json.load(f)
     return ProcessResponse(**data)
 
+def get_raw_data() -> dict:
+    json_path = os.path.join(DATA_DIR, "mock_results.json")
+    with open(json_path, "r") as f:
+        data = json.load(f)
+    return data
+
 def get_top_impact_variables():
     data = get_data()
     cleaned_impact = {}
@@ -28,17 +34,43 @@ def get_top_impact_variables():
     }
 
 def get_scenarios():
-    data = get_data()
-    scenarios = data.data.simulated_summary["simulated_data"]
+    data = get_raw_data()
+    scenarios = data['data']['simulated_summary']['simulated_data']
+    result = {
+        "scenario": {},
+        "kpi_value": {},
+        "elements": {}
+    }
     
-    # Simplify data for charting
-    result = []
-    for scenario in scenarios:
-        result.append({
-            "scenario": scenario.scenario,
-            "kpi_value": scenario.kpi_value
-        })
-    
+    for idx, scenario in enumerate(scenarios):
+        str_idx = str(idx)
+        
+        result["scenario"][str_idx] = scenario['scenario']
+        
+        result["kpi_value"][str_idx] = scenario['kpi_value']
+        
+        result["elements"][str_idx] = {
+            "Condition": {},
+            "Setpoint": {}
+        }
+        for equipment_spec in scenario['equipment_specification']:
+            equipment = equipment_spec['equipment']
+            
+            for variable in equipment_spec['variables']:
+                var_name = f"{equipment}.{variable['name']}"
+                if var_name == "Fuel.Fuel - temperature":
+                    var_name = "Fuel.temperature"
+                
+                if 'heat_transfer_coefficient' in variable['name']:
+                    formatted_value = f"{variable['value']} W/m²·K"
+                else:
+                    formatted_value = f"{variable['value']}K"
+                
+                if variable['type'] == 'Condition':
+                    result["elements"][str_idx]["Condition"][var_name] = formatted_value
+                else:
+                    result["elements"][str_idx]["Setpoint"][var_name] = formatted_value
+
     return result
 
 def get_setpoint_impacts():
