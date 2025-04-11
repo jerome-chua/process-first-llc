@@ -23,11 +23,6 @@ export interface SetpointImpact {
   unit: string;
 }
 
-export interface Scenario {
-  scenario: string;
-  kpi_value: number;
-}
-
 export const mockApi = {
   getProcessData: async () => {
     try {
@@ -49,7 +44,7 @@ export const mockApi = {
     }
   },
 
-  getScenarios: async (): Promise<Scenario[]> => {
+  getScenarios: async (): Promise<any> => {
     try {
       const response = await apiClient.get("/scenarios");
       return response.data;
