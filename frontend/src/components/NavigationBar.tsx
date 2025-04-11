@@ -17,9 +17,12 @@ export function NavigationBar() {
 
   return (
     <div className="flex items-center justify-between p-2 mb-6">
-      <h1 className="text-xl font-bold text-indigo-500 font-titillium leading-tight">
-        Process First LLC
-      </h1>
+      <div className="flex items-center gap-2">
+        <img src="/chem-favicon.png" alt="Process First Logo" className="w-6 h-6" />
+        <h1 className="text-xl font-bold text-indigo-500 font-titillium leading-tight">
+          Process First LLC
+        </h1>
+      </div>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
