@@ -25,6 +25,34 @@
 - OpenAI API key (for AI-generated summaries)
 - Node.js and npm (for frontend development)
 
+### Setup Guide
+Follow these steps to get started:
+
+1. **Install Git**
+   - Download Git from https://git-scm.com/downloads
+   - Follow the installation wizard with default settings
+
+2. **Clone the Repository**
+   ```bash
+   # Navigate to your preferred directory
+   cd /path/to/your/preferred/location
+
+   # Clone the repository
+   git clone git@github.com:[your-username]/process-first-llc.git
+
+   # Navigate into the project directory
+   cd process-first-llc
+   ```
+
+3. **Verify Installation**
+   ```bash
+   # Check Git version
+   git --version
+
+   # Check repository status
+   git status
+   ```
+
 ### Environment Variables
 Create a `.env` file in the root directory with the following variables:
 ```
