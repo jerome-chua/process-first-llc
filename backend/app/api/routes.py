@@ -110,16 +110,25 @@ async def generate_report():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating report: {str(e)}")
 
+PDF_PATH = "./output/process_analysis_report.pdf"
 @router.get("/download-report")
 async def download_report():
     """
-    Download the generated report
+    Download the generated PDF report
     """
-    if not os.path.exists(PDF_PATH):
-        raise HTTPException(status_code=404, detail="Report not found. Generate a report first.")
-    
-    return FileResponse(
-        path=PDF_PATH, 
-        media_type="application/pdf", 
-        filename="process_analysis_report.pdf"
-    )
+    try:
+        if not os.path.exists(PDF_PATH):
+            raise HTTPException(
+                status_code=404,
+                detail="Report not found. Please generate the report first."
+            )
+        
+        return FileResponse(
+            path=PDF_PATH,
+            filename="process_analysis_report.pdf",
+            media_type="application/pdf"
+        )
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Error downloading report: {str(e)}")
