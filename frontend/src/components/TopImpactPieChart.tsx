@@ -5,6 +5,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { TrendingUp } from "lucide-react";
 
 const chartConfig = {
   temperature: {
@@ -53,6 +55,12 @@ const mapTopImpactToChartFormat = (topImpactData: any) => {
 
 export const TopImpactPieChart = ({ data }: TopImpactPieChartProps) => {
   return (
+    <Card className="flex flex-col">
+    <CardHeader className="items-center pb-0">
+      <CardTitle>Top Impact</CardTitle>
+      <CardDescription>{data.top_summary_text}</CardDescription>
+    </CardHeader>
+    <CardContent className="flex-1 pb-0">
     <ChartContainer
       config={chartConfig}
       className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
@@ -67,5 +75,13 @@ export const TopImpactPieChart = ({ data }: TopImpactPieChartProps) => {
         />
       </PieChart>
     </ChartContainer>
+    </CardContent>
+        <CardFooter className="flex-col gap-2 text-sm">
+          <div className="flex items-center gap-2 font-medium leading-none">
+            <b>Insight:</b> Prioritise controlling Air temperature for maximum
+            impact <TrendingUp className="h-4 w-4" />
+          </div>
+        </CardFooter>
+      </Card>
   );
 }; 
