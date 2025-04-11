@@ -123,7 +123,6 @@ export const CanvasPage = () => {
     actionType: string,
     updatedEdgeData: TableEdge
   ): void => {
-    console.log("see: ", updatedEdgeData);
     switch (actionType) {
       case "delete":
         setTableEdges(

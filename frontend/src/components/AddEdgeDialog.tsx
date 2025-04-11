@@ -22,7 +22,6 @@ export function AddEdgeDialog({ nodes, onSave }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("formData: ", formData);
     onSave(formData);
   };
 
