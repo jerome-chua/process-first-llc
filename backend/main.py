@@ -30,6 +30,7 @@ async def root():
             "/api/process-data",
             "/api/top-impact",
             "/api/scenarios",
+            "/api/top-scenarios-temperatures",
             "/api/setpoint-impacts"
         ]
     }

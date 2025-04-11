@@ -7,7 +7,8 @@ from app.services.process_data import (
     get_data, 
     get_top_impact_variables,
     get_scenarios,
-    get_setpoint_impacts
+    get_setpoint_impacts,
+    get_top_scenarios_temperatures
 )
 from app.services.data_processor import DataProcessor
 from app.services.chart_generator import ChartGenerator
@@ -51,6 +52,14 @@ async def scenarios():
         return get_scenarios()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving scenarios: {str(e)}")
+
+@router.get("/top-scenarios-temperatures")
+async def top_scenarios_temperatures():
+    """Return only temperature values from top performing scenarios."""
+    try:
+        return get_top_scenarios_temperatures()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving top scenarios temperatures: {str(e)}")
 
 @router.get("/setpoint-impacts")
 async def setpoint_impacts():

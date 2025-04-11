@@ -23,6 +23,21 @@ export interface SetpointImpact {
   unit: string;
 }
 
+export interface TopScenarioTemperature {
+  scenario: string;
+  kpi_value: number;
+  temperatures: {
+    [key: string]: {
+      value: number;
+      formatted: string;
+    };
+  };
+}
+
+export interface TopScenariosTemperaturesResponse {
+  top_scenarios: TopScenarioTemperature[];
+}
+
 export const mockApi = {
   getProcessData: async () => {
     try {
@@ -50,6 +65,16 @@ export const mockApi = {
       return response.data;
     } catch (error) {
       console.error("Error fetching scenarios:", error);
+      throw error;
+    }
+  },
+
+  getTopScenariosTemperatures: async (): Promise<TopScenariosTemperaturesResponse> => {
+    try {
+      const response = await apiClient.get("/top-scenarios-temperatures");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching top scenarios temperatures:", error);
       throw error;
     }
   },

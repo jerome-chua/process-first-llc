@@ -73,6 +73,45 @@ def get_scenarios():
 
     return result
 
+def get_top_scenarios_temperatures():
+    """
+    Extract only the temperature values from the top performing scenarios.
+    Returns a simplified data structure with just the temperature values.
+    """
+    data = get_raw_data()
+    scenarios = data['data']['simulated_summary']['simulated_data']
+    sorted_scenarios = sorted(scenarios, key=lambda x: x['kpi_value'], reverse=True)
+    top_scenarios = sorted_scenarios[:5]
+    
+    result = {
+        "top_scenarios": []
+    }
+    
+    for scenario in top_scenarios:
+        scenario_data = {
+            "scenario": scenario['scenario'],
+            "kpi_value": scenario['kpi_value'],
+            "temperatures": {}
+        }
+        
+        for equipment_spec in scenario['equipment_specification']:
+            equipment = equipment_spec['equipment']
+            
+            for variable in equipment_spec['variables']:
+                if 'temperature' in variable['name'].lower() and 'heat_transfer_coefficient' not in variable['name'].lower():
+                    var_name = f"{equipment}.{variable['name']}"
+                    if var_name == "Fuel.Fuel - temperature":
+                        var_name = "Fuel.temperature"
+                    
+                    scenario_data["temperatures"][var_name] = {
+                        "value": variable['value'],
+                        "formatted": f"{variable['value']}K"
+                    }
+        
+        result["top_scenarios"].append(scenario_data)
+    
+    return result
+
 def get_setpoint_impacts():
     data = get_data()
     return data.data.setpoint_impact_summary
